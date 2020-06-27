@@ -85,6 +85,17 @@ function generateSingleCar(index) {
     tableViewButton.addEventListener("click", function() {
         draw(cars, DOM.tableData, "table")
     })
+
+    // const searchBtn = document.getElementById("searchBtn").addEventListener("click" , function() {
+    //     const value = this.value; 
+        
+    //     for(let index = 0; index < cars.length ; index++){
+    //         if(cars[index].type === value ){
+    //              console.log(cars[index]);
+    //          }
+    
+    //      }
+    //  }) 
 }())
 
 
@@ -107,31 +118,32 @@ function clearDOM() {
 function getListItem(carData) {
     const listItem = document.createElement("li");
     const img = document.createElement("img");
-    img.style.height ="80px"
-    img.style.width ="80px"
+  
+    
     img.src = `${carData.image}`
-    img.style.position = "absolute";
-    img.style.right ="80px"
-
-    listItem.style.height = "120px"
     listItem.classList.add("list-group-item");
+    listItem.classList.add("listItem");
     listItem.innerText = `car lp: ${carData.lp}, car color: ${carData.color}, type: ${carData.type}`;
-    listItem.style.marginBottom = "5px";
 
-    if( `${carData.color}` === "black"){
-    listItem.classList.add("list-group-item-secondary");
-    }
-    else if(`${carData.color}` === "red"){
-        listItem.classList.add("list-group-item-danger");
-    }
-    else if(`${carData.color}` === "yellow"){
-        listItem.classList.add("list-group-item-warning");
-    }
-    else if(`${carData.color}` === "green"){
-        listItem.classList.add("list-group-item-success");
+    switch (carData.color) {
+        case "black" : {
+            listItem.classList.add("list-group-item-secondary");
+        }
+        case "red" : {
+            listItem.classList.add("list-group-item-danger");
+        }
+        case "yellow" : {
+            listItem.classList.add("list-group-item-warning");
+        }
+        case "green" : {
+            listItem.classList.add("list-group-item-success");
+        }
     }
 
-    listItem.appendChild(img)
+
+
+
+   listItem.appendChild(img)
 
     return listItem;
 }
@@ -186,36 +198,35 @@ function getCardItem(carData) {
 function getRowItem(carData) {
     
    const tableBody = document.getElementById("data-table");
-   
    const row = document.createElement ("tr");
-   const cellLp = document.createElement("td");
-   const cellColor = document.createElement("td");
-   const cellType = document.createElement("td");
-   const cellDoors = document.createElement("td");
-   const cellImage = document.createElement("td");
-   const cellTextLP = document.createTextNode(`${carData.lp}`);
-   const cellTextColor = document.createTextNode(`${carData.color}`);
-   const cellTextType = document.createTextNode(`${carData.type}`);
-   const cellTextDoors = document.createTextNode(`${carData.doors}`);
-   const img = document.createElement("img");
-   img.src = `${carData.image}` ;
-   img.style.height = "80px";
-   img.style.width = "80px";
 
 
-   cellLp.appendChild(cellTextLP);
-   row.appendChild(cellLp);
-   cellColor.appendChild(cellTextColor);
-   row.appendChild(cellColor);
-   cellType.appendChild(cellTextType);
-   row.appendChild(cellType); 
-   cellDoors.appendChild(cellTextDoors);
-   row.appendChild(cellDoors);
-   cellImage.appendChild(img);
-   row.appendChild(cellImage); 
-   tableBody.appendChild(row); 
-   
-    
+
+
+    _createCell(carData.lp)
+    _createCell(carData.color)
+    _createCell(carData.type)
+    _createCell(carData.doors)
+
+
+
+    const img = document.createElement("img");
+    img.src = `${carData.image}` ;
+    row.classList.add("tableRow"); 
+    const cellImage = document.createElement("td");
+    cellImage.appendChild(img);
+    row.appendChild(cellImage); 
+
+   function _createCell(carData){
+       const cell = document.createElement("td");
+       const celltext = document.createTextNode(carData);
+       cell.appendChild(celltext);
+       row.appendChild(cell);
+   } 
+
+   return row 
     
 
  }
+
+
