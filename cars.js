@@ -2,6 +2,7 @@ const colors = ["red", "green", "yellow", "black"];
 const types = ["BMW", "MRCDS", "Mazda", "Subaro"];
 const doors = [2, 4, 5];
 const imageList = ["https://lkjlskdfj.net/wp-content/uploads/2017/04/expensive-car-735x400.jpg" , "https://i.ytimg.com/vi/jdNkbl3NXUc/hqdefault.jpg", "https://i.pinimg.com/originals/6f/cd/fa/6fcdfab82d95335bfe3201ee65a8499c.jpg" , "https://live.staticflickr.com/1925/45379653941_8973dee305_b.jpg"];
+let viewMode = "list";
 
 const DOM = {}
 
@@ -70,32 +71,70 @@ function generateSingleCar(index) {
     const cars = generateCars(100, true)
     DOM.listData = document.getElementById("data");
     DOM.cardsData = document.getElementById("data-cards");
-    DOM.tableData = document.getElementById("data-table")
+    DOM.tableData = document.getElementById("data-table");
     draw(cars, DOM.listData, "list");
-
+    
     const listViewButton = document.getElementById("listView");
     const cardViewButton = document.getElementById("cardView");
     const tableViewButton = document.getElementById("tableView");
     listViewButton.addEventListener("click", function () {
-        draw(cars, DOM.listData, "list")
+        draw(cars, DOM.listData, "list");
+        viewMode = "list";
+
     })
     cardViewButton.addEventListener("click", function () {
-        draw(cars, DOM.cardsData, "cards")
+        draw(cars, DOM.cardsData, "cards");
+        viewMode = "cards";
     })
     tableViewButton.addEventListener("click", function() {
-        draw(cars, DOM.tableData, "table")
-    })
-
-    // const searchBtn = document.getElementById("searchBtn").addEventListener("click" , function() {
-    //     const value = this.value; 
+        draw(cars, DOM.tableData, "table");
+        viewMode = "table";
         
-    //     for(let index = 0; index < cars.length ; index++){
-    //         if(cars[index].type === value ){
-    //              console.log(cars[index]);
-    //          }
+    })
     
-    //      }
-    //  }) 
+    const searchBtn = document.getElementById("searchBtn");
+    searchBtn.addEventListener("click", function searchAction() {
+        const searchData = document.getElementById("searchValue");
+        const filteredArray = [];
+        
+        for (let index = 0; index < cars.length; index++) {
+            if (cars[index].type) {
+                const type = cars[index].type.toLowerCase();
+                if (type === searchData.value) {
+                    filteredArray.push(cars[index]);
+                    
+                }
+            }
+        }
+
+        if (viewMode === "list"){
+            draw(filteredArray ,DOM.listData, "list" )
+        }
+        else if (viewMode === "cards") {
+          draw(filteredArray ,DOM.cardsData, "cards" )
+
+        }
+        else if (viewMode === "table") {
+          draw(filteredArray ,DOM.tableData, "table" )
+ 
+        }
+        // switch (viewMode) {
+        //     case "list" :{
+        //         draw(filteredArray ,DOM.listData, "list" )
+        //     }
+        //     case "cards" : {
+        //         draw(filteredArray ,DOM.cardsData, "cards" )
+
+        //     }
+        //     case "table" : {
+        //         draw(filteredArray ,DOM.tableData, "table" )
+
+        //     }
+        // }
+        
+    })
+    
+    
 }())
 
 
