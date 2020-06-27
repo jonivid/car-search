@@ -11,7 +11,6 @@ const displayFunctions = {
     "list": getListItem,
     "table": getRowItem,
 };
-// console.log(displayFunctions)
 
 
 function generateCars(numberOfCars, isArray) { //return array with Cars ( each car is an object in JS)
@@ -118,6 +117,9 @@ function generateSingleCar(index) {
           draw(filteredArray ,DOM.tableData, "table" )
  
         }
+
+
+        // dosn't work for me
         // switch (viewMode) {
         //     case "list" :{
         //         draw(filteredArray ,DOM.listData, "list" )
